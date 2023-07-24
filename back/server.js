@@ -10,12 +10,13 @@ var server=require('http').createServer(app);
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 
-app.post('/api/login',async (req,res)=>{
+app.post('/api/signin',async (req,res)=>{
   try{
     console.log(req.body);
     await client.connect();
     userdata=client.db('trippy').collection('User');
     const result=await userdata.find(req.body).toArray();
+    console.log(result);
     if(result.length>0)
     {
       //return user info

@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:trippy/SignUpPage.dart';
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+import 'HomePage.dart';
+import 'dart:convert';
 void main() {
   runApp(MainApp());
 }
 
+
+void showToast(String message) {
+  Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Colors.grey,
+    textColor: Colors.white,
+    fontSize: 16.0,
+  );
+}
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -25,6 +41,40 @@ class _InputPageState extends State<InputPage> {
   final _textController2 = TextEditingController();
   FocusNode _focusNode1 = FocusNode();
   FocusNode _focusNode2 = FocusNode();
+  void _signIn() async {
+    final response = await http.post(
+      Uri.parse('http://localhost:80/api/signin'), // replace with your server url
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': _textController1.text,
+        'password': _textController2.text,
+      }),
+    );
+    var data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      
+      if(data == "false") {
+        print(response.body);
+        showToast("아이디가 존재하지 않습니다");
+        throw Exception('Login failed. Invalid username or password.');
+      } else {
+        
+        Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+        //print('User ID: ${data["fullname"]}');  // assuming the user id is returned in the response
+        // Insert further actions to be taken upon successful login here.
+      }
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to create account.');
+    }
+}
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -124,6 +174,7 @@ class _InputPageState extends State<InputPage> {
             onPressed: () {
               print('Input 1: ${_textController1.text}');
               print('Input 2: ${_textController2.text}');
+              _signIn();
             },
             child: Text('Sign In', style: TextStyle(
                 fontFamily: 'Dmsans',

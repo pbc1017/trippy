@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trippy/main.dart';
 import 'package:trippy/HomePage.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -22,6 +23,29 @@ class _SignUpPageState extends State<SignUpPage>{
     _confirmPasswordController.dispose();
     super.dispose();
   }
+  void _signUp() async {
+  final response = await http.post(
+    Uri.parse('http://localhost:80/api/signup'), // replace with your server url
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'email': _emailController.text,
+      'password': _passwordController.text,
+      'fullname': _fullnameController.text,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server returns a 200 OK response, parse the JSON.
+    print('Success: ${response.body}');
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to create account.');
+  }
+}
+
 
   @override
   Widget build(BuildContext context){
@@ -210,6 +234,7 @@ class _SignUpPageState extends State<SignUpPage>{
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                           print('Processing Data');
+                          _signUp();
                         }
                   },
                   child: Text('Sign Up', style: TextStyle(
@@ -241,3 +266,4 @@ class _SignUpPageState extends State<SignUpPage>{
     );
   }
 }
+
