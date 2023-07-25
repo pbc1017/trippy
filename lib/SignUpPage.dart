@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:trippy/main.dart';
 import 'package:trippy/HomePage.dart';
+import 'package:trippy/QuestionPage.dart';
+import 'package:trippy/BeforeQuestionPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'models/question.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -250,7 +254,7 @@ class _SignUpPageState extends State<SignUpPage>{
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
+                    MaterialPageRoute(builder: (context) => BeforeQuestionPage()),
                   );
                 },
                 child: Text("You don't have an account yet? Sign up", style: TextStyle(
