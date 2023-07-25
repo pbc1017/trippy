@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trippy/FirstPage.dart';
-import 'SecondPage.dart';
+import 'package:trippy/SecondPage.dart';
+import 'FirstPage.dart';
 import 'ThirdPage.dart';
 import 'FourthPage.dart';
 import 'FifthPage.dart';
