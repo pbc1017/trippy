@@ -1,5 +1,7 @@
 const { MongoClient, ServerApiVersion ,ObjectId} = require('mongodb');
 const express=require('express');
+const { spawn } = require('child_process');
+const path = require('path');
 // const prompt=require('prompt-sync')({singint:true});
 
 // import * as roomRepository from './data/room.js';
@@ -32,6 +34,7 @@ app.post('/api/signin',async (req,res)=>{
   }
 
 });
+
 app.post('/api/signup',async (req,res)=>{
   try{
     console.log(req.body);
@@ -45,8 +48,41 @@ app.post('/api/signup',async (req,res)=>{
   catch{
     console.log("Catch");
   }
+});
 
+// req: {"email":"pbc1017@kaist.ac.kr"}
+// res: [여행지,음식점 정보 18개 배열]
+app.get('/api/recommand',async (req, res) => {
+  try{
+    console.log(req.query);
+    await client.connect();
+    userdata=client.db('trippy').collection('User');
+    const result=await userdata.find(req.query).toArray();
+    console.log(result[0]);
 
+    const pythonScriptPath = path.join(__dirname, './modules/recommand/recommand.py');
+    const { _M, _U, _O, _A, _B, _1, _2, _3 } = result[0].properties;
+    const pythonProcess = spawn('python', [pythonScriptPath, _M, _U, _O, _A, _B, _1, _2, _3]);
+
+    let scriptOutput = '';
+    
+    pythonProcess.stdout.on('data', (data) => {
+      scriptOutput += data.toString();
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+      console.error(`stderr: ${data}`);
+    });
+
+    pythonProcess.on('close', (code) => {
+      if (code !== 0) {
+        return res.status(500).json({ error: `Process exited with code ${code}` });
+      }
+      return res.status(200).json(JSON.parse(scriptOutput));
+    });
+  } catch {
+    console.log("catch");
+  }
 });
 
 server.listen(80,main);

@@ -27,7 +27,7 @@ def pageScroll(driver):
   for element in elements:
     # try:
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'img')))
-    name = element.find_element(By.CSS_SELECTOR, 'div.tit a').text
+    name = element.find_element(By.CSS_SELECTOR, 'div.tit a').text.split("[")[0]
     cotid = element.find_element(By.CSS_SELECTOR, 'div.tit a').get_attribute('onclick').split("'")[1]
     
     detail_url = f"https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid={cotid}"
@@ -44,13 +44,6 @@ def pageScroll(driver):
       tmp[key] = value
 
     try:
-      operating= tmp['이용시간']
-      dayoff = tmp['휴일']
-    except:
-      operating = ""
-      dayoff = ""
-
-    try:
       call = tmp['문의 및 안내']
     except:
       call = ""
@@ -64,6 +57,22 @@ def pageScroll(driver):
       isPark = tmp['주차']
     except:
       isPark = ""
+
+    try:
+      inTime = tmp['입실시간']
+    except:
+      inTime = ""
+      
+    try:
+      outTime = tmp['퇴실시간']
+    except:
+      outTime = ""
+      
+    try:
+      size = tmp['수용인원']
+    except:
+      size = ""
+      
     try:
       address	= tmp['주소']
       location = geocoding(tmp['주소'])
@@ -90,6 +99,11 @@ def pageScroll(driver):
       reviewNum = 0
       reviewRate = 0.0
 
+    try:
+      type = list.find_element(By.CSS_SELECTOR, 'div.rating.clickArea span.subcategory.clickable').text
+    except:
+      type = ""
+
     driver.close()  
     driver.switch_to.window(driver.window_handles[0])
     
@@ -97,12 +111,10 @@ def pageScroll(driver):
     
     # 원소에 대한 정보를 리스트에 추가합니다.
     data.append({
-        'id': f"travel_부산_{num:05d}",
+        'id': f"hotel_부산_{num:05d}",
         'name': name,
-        'type': "",
+        'type': type,
         'price': "",
-        'time': operating,
-        'dayoff':	dayoff,
         'address': address,	
         'location': location,
         'img': img,	
@@ -111,6 +123,9 @@ def pageScroll(driver):
         'homepage':	homepage,
         'oneliner':	oneliner,
         'detail': detail,
+        'size': size,
+        'inTime': inTime,
+        'outTime': outTime,
         'isPark': isPark,
         'mapUrl': mapUrl,
         'reviewNum':reviewNum,
@@ -123,7 +138,7 @@ def pageScroll(driver):
   df = pd.DataFrame(data)
   df = df.set_index("id")
   print(df)
-  df.to_csv(f'./DB/travel_부산_{num:05d}.csv')
+  df.to_csv(f'./DB/hotel_부산_{num:05d}.csv')
   return df
 
 def dongScroll():
@@ -133,12 +148,12 @@ def dongScroll():
   # options.add_argument("headless")
   options.add_argument('window-size=1920x1080') 
   driver = webdriver.Chrome(options)
-  for i in range(47):
-    url = f"https://korean.visitkorea.or.kr/list/travelinfo.do?service=ms#ms^0^6^All^e6875575-2cc2-43ba-9651-28d31a7b3e23,651c5b95-a5b3-11e8-8165-020027310001,d3fd4d9f-fbd4-430f-b5d5-291b4d9920be,c24d515f-3202-45e5-834e-1a091901aeff,23bc02b8-da01-41bf-8118-af882436cd3c,3f36ca4b-6f45-45cb-9042-265c96a4868c,2d4f4e06-2d37-4e54-ad5c-172add6e6680,640d3489-8fc3-11e8-8165-020027310001,9668f0f1-8afe-4526-8007-503bd02fd6d8,1601b0a3-144e-40b7-95b4-b946e537a25b,1c981ad4-7834-11e8-82c8-020027310001,266bf7a0-cbab-4bb4-b800-d7edd5642180^{i+1}^^1^#%EB%A0%88%ED%8F%AC%EC%B8%A0#%EB%AC%B8%ED%99%94%EC%8B%9C%EC%84%A4#%EC%97%AD%EC%82%AC#%EC%9E%90%EC%97%B0#%EC%B2%B4%ED%97%98#%EA%B4%80%EA%B4%91%EC%A7%80#%EC%8B%A4%EB%82%B4%EC%97%AC%ED%96%89%EC%A7%80#%ED%8A%B8%EB%A0%88%ED%82%B9#%EC%9D%B4%EC%83%89%EC%B2%B4%ED%97%98#%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B8%8C%EC%BD%94%EC%8A%A4#%EB%B4%84%EA%BD%83%EB%82%98%EB%93%A4%EC%9D%B4#%EB%B4%84%EB%82%98%EB%93%A4%EC%9D%B4"
+  for i in range(12):
+    url = f"https://korean.visitkorea.or.kr/list/travelinfo.do?service=ms#ms^0^6^All^b7023aff-8138-4a00-ae7f-e4fe7b13a61b^{i+1}^^1^#%EC%88%99%EB%B0%95"
     driver.get(url)
     driver.refresh()
     time.sleep(2)
     data = pd.concat([data, pageScroll(driver)])
-  data.to_csv(f'./DB/travel_부산.csv')
+  data.to_csv(f'./DB/hotel_부산.csv')
   driver.quit()
 dongScroll()

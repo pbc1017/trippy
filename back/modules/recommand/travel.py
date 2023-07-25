@@ -1,9 +1,17 @@
 import pandas as pd
 import numpy as np
 from sklearn.cluster import KMeans
+from pymongo import MongoClient
 
-def load_data(filepath):
-    return pd.read_csv(filepath)
+def load_data_from_mongodb(collection_name):
+    db_name = "trippy"
+    uri = "mongodb+srv://knsol2:1017@cluster0.9vu4wen.mongodb.net/"
+    client = MongoClient(uri)
+    db = client[db_name]
+    collection = db[collection_name]
+    data = collection.find()
+    df = pd.DataFrame(list(data))
+    return df
 
 def get_preference(M_pref, U_pref, O_pref, A_pref, B_pref, _1_pref, _2_pref, _3_pref):
     preferences = {'M': M_pref, 'U': U_pref, 'O': O_pref, 'A': A_pref, 'B': B_pref, '1': _1_pref, '2': _2_pref, '3': _3_pref}
@@ -42,7 +50,7 @@ def calculate_weights(data, preferences):
 def recommend_destinations(data, num_recommendations):
     probabilities = data['weight'] / data['weight'].sum()
     recommended_destinations = data.sample(n=num_recommendations, replace=False, weights=probabilities)
-    return recommended_destinations[['id', 'name','location']]
+    return recommended_destinations
 
 def safe_eval(cell):
     try:
@@ -95,11 +103,11 @@ def recommend_until_sufficient(data, min_per_cluster):
         cluster_counts = clustered_recommendations['cluster'].value_counts()
         if all(count >= min_per_cluster for count in cluster_counts):
             break
-    clustered_recommendations= clustered_recommendations.dropna(axis=1, how='all')
+    # clustered_recommendations= clustered_recommendations.dropna(axis=1, how='all')
     return clustered_recommendations
 
 def travel(_M, _U, _O, _A, _B, _1, _2, _3):
-  data = load_data('test2.csv')
+  data = load_data_from_mongodb('travel')
   preferences = get_preference(_M, _U, _O, _A, _B, _1, _2, _3)
   data = calculate_weights(data, preferences)
   clustered_recommendations = recommend_until_sufficient(data, 4)
