@@ -61,7 +61,7 @@ class _QuestionPageState extends State<QuestionPage> {
             width: double.infinity,
             height: double.infinity,
             child: Image.asset(
-              'assets/images/abiansemal.webp',
+              currentQuestion.imageUrl,
               fit: BoxFit.cover,
             ),
           ),

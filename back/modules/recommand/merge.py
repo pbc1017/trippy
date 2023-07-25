@@ -13,7 +13,7 @@ def get_next_location(current_location, candidates):
     candidates = np.delete(candidates, closest_index, axis=0)
     return closest_location, candidates, closest_index
 
-def get_travel_order(df_travel, df_food):
+def get_travel_order(df_travel, df_food, df_hotel):
     # Initialize the travel order
     travel_order = []
     # Get the initial location (the first travel place)
@@ -37,5 +37,9 @@ def get_travel_order(df_travel, df_food):
     current_location, df_travel_locations, closest_index = get_next_location(current_location, df_travel[['latitude', 'longitude']].values)
     travel_order.append(df_travel.iloc[closest_index])
     df_travel = df_travel.drop(df_travel.index[closest_index])
+    # Add the hotel at the end of the day
+    if not df_hotel.empty:  # Check if df_hotel is not empty
+        travel_order.append(df_hotel.iloc[0])
+        df_hotel = df_hotel.drop(df_hotel.index[0])
     # Return the travel order as a DataFrame
     return pd.DataFrame(travel_order)

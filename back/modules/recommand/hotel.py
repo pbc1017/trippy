@@ -7,8 +7,8 @@ from travel import load_data_from_mongodb as load_data
 def calculate_weights_food(row):
     return row['reviewNum'] + 0.001 * row['reviewRate'] - 0.01 * row['distance_to_nearest_center']
 
-def food(df_cluster):
-    df_food = load_data('food')
+def hotel(df_cluster):
+    df_food = load_data('hotel')
 
     # Calculate cluster centers
     centers = df_cluster.groupby('cluster')[['center_latitude', 'center_longitude']].first()
@@ -58,22 +58,25 @@ def food(df_cluster):
         df_cluster_food['weight'] = df_cluster_food['weight'] / df_cluster_food['weight'].sum()
         
         # Keep track of selected types to avoid duplicates
-        selected_types = set()
+        # selected_types = set()
         
         # Select two food places
-        while len(selected_food_places[cluster]) < 2:
+        while len(selected_food_places[cluster]) < 1:
             # Select a food place randomly, using weights as probabilities
             selected = df_cluster_food.sample(n=1, weights='weight').iloc[0]
             
             # If this type of food place has not been selected before, add it to the list
-            if selected['type'] not in selected_types:
-                selected_food_places[cluster].append(selected['id'])
-                selected_types.add(selected['type'])
+            # if selected['type'] not in selected_types:
+            selected_food_places[cluster].append(selected['id'])
+                # selected_types.add(selected['type'])
 
     # Prepare the final dataframe
     selected_df = pd.DataFrame()
     for cluster, ids in selected_food_places.items():
         selected_df = pd.concat([selected_df, df_food[df_food['id'].isin(ids)]])
-    selected_df['cluster'] = selected_df['nearest_cluster']
+    selected_df.loc[selected_df['nearest_cluster'] == 1, 'cluster'] = 0
+    selected_df.loc[selected_df['nearest_cluster'] == 2, 'cluster'] = 1
+    selected_df = selected_df[selected_df['nearest_cluster'] != 0]
+    selected_df['cluster'] = selected_df['cluster'].astype(int)
 
     return selected_df

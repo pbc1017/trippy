@@ -4,7 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'HomePage.dart';
 import 'dart:convert';
+import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 void main() {
+  AuthRepository.initialize(appKey: '40006b7e99b12e8a4b89ffa4c4e9a361');
   runApp(MainApp());
 }
 
