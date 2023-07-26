@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:trippy/models/tripCourse.dart';
 import 'package:trippy/CourseWidget.dart';
+import 'package:trippy/models/CourseList.dart';
+import 'package:provider/provider.dart';
 
 class CourseWidget extends StatelessWidget {
-  final Course course;
+  final int dayIndex; // <-- Added dayIndex
   final int index;
-  const CourseWidget({Key? key, required this.course, required this.index}) : super(key: key);
 
+  const CourseWidget({Key? key, required this.dayIndex, required this.index}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
+    var courseList = Provider.of<CourseList>(context);
+    final Course course = courseList.courses[dayIndex][index];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,7 +24,7 @@ class CourseWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                  image: AssetImage(course.imageUrl), fit: BoxFit.cover),
+                  image: NetworkImage(course.img), fit: BoxFit.cover),
             ),
           ),
           const Positioned(
@@ -50,7 +56,7 @@ class CourseWidget extends StatelessWidget {
                 const SizedBox(
                   width: 5,
                 ),
-                Text(course.rating.toString(),
+                Text(course.name.toString(),
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -60,16 +66,16 @@ class CourseWidget extends StatelessWidget {
           ],
         ),
         Text(
-          '${course.place} kilometers',
+          '${course.longitude} kilometers',
           style: const TextStyle(
               fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey),
         ),
-        Text(course.duration,
+        Text(course.isPark,
             style: const TextStyle(
                 fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey)),
         Row(
           children: [
-            Text('\$${course.price}',
+            Text('\$${course.id}',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,

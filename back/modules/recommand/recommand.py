@@ -27,13 +27,17 @@ def recommand(_M,_U,_O,_A,_B,_1,_2,_3):
     # Get the travel order for this cluster
     df_order = get_travel_order(df_travel_cluster, df_food_cluster,df_hotel_cluster)
     final_df=pd.concat([final_df,df_order])
-  print(final_df.to_json(orient='records'))
-  final_df.to_csv('output.csv')
-  return final_df.to_json(orient='records')
+  # print(final_df.to_json(orient='records'))
+  # final_df.to_csv('output.csv')
+  return final_df
 
-try:
-  recommand(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7], sys.argv[8])
-except:
-  print("error")
-
-# recommand(0,0,0,0,0,0,0,0)
+data = []
+while (len(data)  < 3):
+  try:
+    data.append(recommand(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7], sys.argv[8]))
+  except:
+    print("",end="")
+df = {'first':[data[0]],'second':[data[1]],'third':[data[2]]}
+df = pd.DataFrame(df)
+print(df.to_json(orient='records'))
+# recommand(3,7,6,5,5,6,8,3)
