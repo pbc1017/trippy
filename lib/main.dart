@@ -10,6 +10,24 @@ import 'package:trippy/models/CourseList.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 import 'package:trippy/models/QuestionList.dart';
 import 'package:trippy/models/LoginUser.dart';
+
+class FavoriteCourseIndex with ChangeNotifier {
+  int favoriteDayIndex = -1;
+  int favoriteIndex = -1;
+
+  setFavoriteIndex(int dayIndex, int index) {
+    favoriteDayIndex = dayIndex;
+    favoriteIndex = index;
+    notifyListeners();
+  }
+
+  clearFavoriteIndex() {
+    favoriteDayIndex = -1;
+    favoriteIndex = -1;
+    notifyListeners();
+  }
+}
+
 void main() {
   AuthRepository.initialize(appKey: '40006b7e99b12e8a4b89ffa4c4e9a361');
   runApp(
@@ -18,6 +36,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => CourseList()),
         ChangeNotifierProvider(create: (context) => QuestionList()),
         ChangeNotifierProvider(create: (context) => LoginUser()),
+        ChangeNotifierProvider(create: (context) => FavoriteCourseIndex()),  // Add this line
       ],
       child: MainApp(),
     ),

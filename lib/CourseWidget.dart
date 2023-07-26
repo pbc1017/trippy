@@ -3,91 +3,124 @@ import 'package:trippy/models/tripCourse.dart';
 import 'package:trippy/CourseWidget.dart';
 import 'package:trippy/models/CourseList.dart';
 import 'package:provider/provider.dart';
+import 'package:trippy/main.dart';
 
-class CourseWidget extends StatelessWidget {
-  final int dayIndex; // <-- Added dayIndex
+import 'CourseDetail.dart';
+
+class CourseWidget extends StatefulWidget {
+  final int dayIndex; 
   final int index;
+  final String title;  // <-- Add this line
 
-  const CourseWidget({Key? key, required this.dayIndex, required this.index}) : super(key: key);
-  
+  const CourseWidget({Key? key, required this.dayIndex, required this.index, required this.title}) : super(key: key);  // <-- Modify this line
+
+  @override
+  _CourseWidgetState createState() => _CourseWidgetState();
+}
+
+class _CourseWidgetState extends State<CourseWidget> {
   @override
   Widget build(BuildContext context) {
     var courseList = Provider.of<CourseList>(context);
-    final Course course = courseList.courses[dayIndex][index];
+    var favoriteCourseIndex = Provider.of<FavoriteCourseIndex>(context);
+    final List<Course> course = courseList.courses[widget.dayIndex];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(children: <Widget>[
-          Container(
-            height: 380,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              image: DecorationImage(
-                  image: NetworkImage(course.img), fit: BoxFit.cover),
-            ),
+    bool _isFavorited = favoriteCourseIndex.favoriteDayIndex == widget.dayIndex && favoriteCourseIndex.favoriteIndex == widget.index;
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CourseDetail(course: course, title: widget.title, dayIndex: widget.dayIndex,),
           ),
-          const Positioned(
-            top: 20,
-            right: 20,
-            child: Icon(
-              Icons.favorite_border,
-              color: Colors.white,
-              size: 30,
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(children: <Widget>[
+            Container(
+              height: 380,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                image: DecorationImage(
+                    image: NetworkImage(course[0].img), fit: BoxFit.cover),
+              ),
             ),
-          )
-        ]),
-        const SizedBox(
-          height: 15,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              course.name,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            Positioned(
+              top: 20,
+              right: 20,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (_isFavorited) {
+                      favoriteCourseIndex.clearFavoriteIndex();
+                    } else {
+                      favoriteCourseIndex.setFavoriteIndex(widget.dayIndex, widget.index);
+                    }
+                  });
+                },
+                child: Icon(
+                  _isFavorited ? Icons.favorite : Icons.favorite_border,
+                  color: _isFavorited ? Colors.red : Colors.white,
+                  size: 30,
+                ),
+              ),
             ),
-            Row(
-              children: [
-                const Icon(
-                  Icons.star,
-                  size: 15,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(course.name.toString(),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    )),
-              ],
-            )
-          ],
-        ),
-        Text(
-          '${course.longitude} kilometers',
-          style: const TextStyle(
-              fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey),
-        ),
-        Text(course.isPark,
+          ]),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                widget.title,  // <-- Modify this line
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.star,
+                    size: 15,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(course[0].name.toString(),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      )),
+                ],
+              )
+            ],
+          ),
+          Text(
+            '${course[0].longitude} kilometers',
             style: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey)),
-        Row(
-          children: [
-            Text('\$${course.id}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                )),
-            const Text(' night',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ))
-          ],
-        )
-      ],
+                fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey),
+          ),
+          Text(course[0].isPark,
+              style: const TextStyle(
+                  fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey)),
+          Row(
+            children: [
+              Text('\$${course[0].id}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  )),
+              const Text(' night',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ))
+            ],
+          )
+        ],
+      )
     );
   }
 }

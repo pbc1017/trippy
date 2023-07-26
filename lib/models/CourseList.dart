@@ -16,8 +16,17 @@ class CourseList with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeCourse(int dayIndex, int courseIndex) {
-    _courses[dayIndex].removeAt(courseIndex);
+  void removeCourse(int dayIndex, int index) {
+    _courses[dayIndex].removeAt(index);
+    notifyListeners();
+  }
+
+  void reorderCourses(int dayIndex, int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final Course course = _courses[dayIndex].removeAt(oldIndex);
+    _courses[dayIndex].insert(newIndex, course);
     notifyListeners();
   }
 

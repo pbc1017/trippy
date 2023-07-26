@@ -6,6 +6,18 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:trippy/models/CourseList.dart';
 import 'package:provider/provider.dart';
+
+class FavoriteCourseIndex with ChangeNotifier {
+  Map<int, int> _favoriteIndices = {};
+
+  int getFavoriteIndex(int dayIndex) => _favoriteIndices[dayIndex] ?? -1;
+
+  setFavoriteIndex(int dayIndex, int index) {
+    _favoriteIndices[dayIndex] = index;
+    notifyListeners();
+  }
+}
+
 class SecondPage extends StatefulWidget {
   @override
   _SecondPageState createState() => _SecondPageState();
@@ -34,6 +46,7 @@ class _SecondPageState extends State<SecondPage> {
   );
 
   if (response.statusCode == 200) {
+      Provider.of<CourseList>(context, listen: false).clear();
       // If the server returns a 200 OK response, parse the JSON.
       print('Success: ${response.body}');
       final jsonResponse = json.decode(response.body);
@@ -43,7 +56,7 @@ class _SecondPageState extends State<SecondPage> {
         Provider.of<CourseList>(context, listen: false).addCourseList();  // <-- Add a new course list for each day
         var dayCourses = jsonResponse[0][day];
         for (var item in dayCourses) {
-          print(item['imageUrl']);
+          // print(item['imageUrl']);
           setState(() {
             Provider.of<CourseList>(context, listen: false).addCourse(
               Provider.of<CourseList>(context, listen: false).courses.length - 1,
@@ -60,12 +73,12 @@ class _SecondPageState extends State<SecondPage> {
   }
 }
 
-  
-  
   @override
   Widget build(BuildContext context) {
     var courseList = Provider.of<CourseList>(context);
-    return Scaffold(
+    return ChangeNotifierProvider(
+      create: (_) => FavoriteCourseIndex(), // <-- Add this line
+      child: Scaffold(
       body: Column(
         children: [
           SizedBox(height: 50),
@@ -214,16 +227,18 @@ class _SecondPageState extends State<SecondPage> {
               shrinkWrap: true,
               itemCount: courseList.courses.length,  // Use the number of courseLists (i.e., number of days)
               itemBuilder: (BuildContext context, int index) {
-                final course = courseList.courses[index][0];  // Use the first course of each day
+                String title = "AI 추천 코스 ${index + 1}";  // Create title based on the index
                 return CourseWidget(
                   dayIndex: index,
-                  index: 0,  // Always 0 since we are using only the first course
+                  index: 0,
+                  title: title,  // Pass the title to the CourseWidget
                 );
               },
             )
           ),
         ],
       ),
+    )
     );
   }
 }
