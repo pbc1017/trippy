@@ -88,7 +88,7 @@ class _CourseWidgetState extends State<CourseWidget> {
                   const SizedBox(
                     width: 5,
                   ),
-                  Text(course[0].name.toString(),
+                  Text("4.7",
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -98,27 +98,27 @@ class _CourseWidgetState extends State<CourseWidget> {
             ],
           ),
           Text(
-            '${course[0].longitude} kilometers',
+            'Busan',
             style: const TextStyle(
                 fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey),
           ),
-          Text(course[0].isPark,
-              style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey)),
-          Row(
-            children: [
-              Text('\$${course[0].id}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  )),
-              const Text(' night',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ))
-            ],
-          )
+          // Text('',
+          //     style: const TextStyle(
+          //         fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey)),
+          // Row(
+          //   children: [
+          //     Text('기장 · 광안리 · 해운대',
+          //         style: const TextStyle(
+          //           fontSize: 16,
+          //           fontWeight: FontWeight.w500,
+          //         )),
+          //     // const Text(' night',
+          //     //     style: TextStyle(
+          //     //       fontSize: 16,
+          //     //       fontWeight: FontWeight.w400,
+          //     //     ))
+          //   ],
+          // )
         ],
       )
     );

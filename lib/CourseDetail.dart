@@ -34,142 +34,141 @@ class _CourseDetailState extends State<CourseDetail> {
   @override
   Widget build(BuildContext context) {
     var favoriteCourseIndex = context.watch<FavoriteCourseIndex>();
-  bool _isFavorited = favoriteCourseIndex.favoriteDayIndex == widget.dayIndex;
-// ...
+    bool _isFavorited = favoriteCourseIndex.favoriteDayIndex == widget.dayIndex;
+
     return Scaffold(
       body: Stack(
         children: [
-          ListView(
+          Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(widget.title, style: TextStyle(fontSize: 24)),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (_isFavorited) {
-                            favoriteCourseIndex.clearFavoriteIndex();
-                          } else {
-                            favoriteCourseIndex.setFavoriteIndex(widget.dayIndex,0);
-                          }
-                        });
-                      },
-                      child: Icon(
-                        _isFavorited ? Icons.favorite : Icons.favorite_border,
-                        color: _isFavorited ? Colors.red : Colors.white,
-                        size: 30,
+              Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(day1Courses[0].img),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(Colors.grey.withOpacity(0.8), BlendMode.srcOver),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: BackButton(color: Colors.white),
+                          ),
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          widget.title,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 24, color: Colors.white)
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if (_isFavorited) {
+                                    favoriteCourseIndex.clearFavoriteIndex();
+                                  } else {
+                                    favoriteCourseIndex.setFavoriteIndex(widget.dayIndex,0);
+                                  }
+                                });
+                              },
+                              child: Icon(
+                                _isFavorited ? Icons.favorite : Icons.favorite_border,
+                                color: _isFavorited ? Colors.red : Colors.white,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    
+                    // Repeat for each day
+                  // Repeat for each day
+                    for (var i = 0; i < 3; i++)
+                      Column(
+                        children: [
+                          Stack(
+                            children: [
+                              Container(
+                                color: Colors.grey[200],
+                                height: 70,  // adjust as needed
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Day $i"),
+                                    FloatingActionButton(
+                                      mini: true, 
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => SpotSearch(courses: day1Courses, type: "all"),
+                                          ),
+                                        );
+                                      },
+                                      child: const Icon(Icons.add),
+                                      backgroundColor: Colors.green,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          ReorderableListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: day1Courses.length,
+                            itemBuilder: (context, index) {
+                              return SpotWidget(
+                                key: Key(day1Courses[index].id),
+                                course: day1Courses[index],
+                              );
+                            },
+                            onReorder: (int oldIndex, int newIndex) {
+                              setState(() {
+                                if (oldIndex < newIndex) {
+                                  newIndex -= 1;
+                                }
+                                final Course item = day1Courses.removeAt(oldIndex);
+                                day1Courses.insert(newIndex, item);
+                                context.read<CourseList>().reorderCourses(widget.dayIndex, oldIndex, newIndex);
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+
+
                   ],
                 ),
               ),
-              const SizedBox(height: 50),
-              const Text("1일차"),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SpotSearch(courses: day1Courses, type: "all"),
-                    ),
-                  );
-                },
-                child: const Text('추가'),
-              ),
-              ReorderableListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: day1Courses.length,
-                itemBuilder: (context, index) {
-                  return SpotWidget(
-                    key: Key(day1Courses[index].id),
-                    course: day1Courses[index],
-                  );
-                },
-                onReorder: (int oldIndex, int newIndex) {
-                  setState(() {
-                    if (oldIndex < newIndex) {
-                      newIndex -= 1;
-                    }
-                    final Course item = day1Courses.removeAt(oldIndex);
-                    day1Courses.insert(newIndex, item);
-                    context.read<CourseList>().reorderCourses(widget.dayIndex, oldIndex, newIndex);  // Add this line
-                  });
-                },
-              ),
-              const Text("2일차"),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SpotSearch(courses: day1Courses, type: "all"),
-                    ),
-                  );
-                },
-                child: const Text('추가'),
-              ),
-              ReorderableListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: day2Courses.length,
-                itemBuilder: (context, index) {
-                  return SpotWidget(
-                    key: Key(day2Courses[index].id),
-                    course: day2Courses[index],
-                  );
-                },
-                onReorder: (int oldIndex, int newIndex) {
-                  setState(() {
-                    if (oldIndex < newIndex) {
-                      newIndex -= 1;
-                    }
-                    final Course item = day2Courses.removeAt(oldIndex);
-                    day2Courses.insert(newIndex, item);
-                    context.read<CourseList>().reorderCourses(widget.dayIndex, oldIndex, newIndex);  // Add this line
-                  });
-                },
-              ),
-              const Text("3일차"),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SpotSearch(courses: day1Courses, type: "all"),
-                    ),
-                  );
-                },
-                child: const Text('추가'),
-              ),
-              ReorderableListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: day3Courses.length,
-                itemBuilder: (context, index) {
-                  return SpotWidget(
-                    key: Key(day3Courses[index].id),
-                    course: day3Courses[index],
-                  );
-                },
-                onReorder: (int oldIndex, int newIndex) {
-                  setState(() {
-                    if (oldIndex < newIndex) {
-                      newIndex -= 1;
-                    }
-                    final Course item = day3Courses.removeAt(oldIndex);
-                    day3Courses.insert(newIndex, item);
-                    context.read<CourseList>().reorderCourses(widget.dayIndex, oldIndex, newIndex);  // Add this line
-                  });
-                },
-              ),
             ],
-          ),
-          SafeArea(
-            child: BackButton(color: Colors.black),
           ),
         ],
       ),
