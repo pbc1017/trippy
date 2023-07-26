@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:trippy/SignUpPage.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:trippy/models/LoginUser.dart';
 import 'HomePage.dart';
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:trippy/models/CourseList.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
+import 'package:trippy/models/QuestionList.dart';
+import 'package:trippy/models/LoginUser.dart';
 void main() {
   AuthRepository.initialize(appKey: '40006b7e99b12e8a4b89ffa4c4e9a361');
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => CourseList(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CourseList()),
+        ChangeNotifierProvider(create: (context) => QuestionList()),
+        ChangeNotifierProvider(create: (context) => LoginUser()),
+      ],
       child: MainApp(),
     ),
   );
@@ -70,7 +77,8 @@ class _InputPageState extends State<InputPage> {
         showToast("아이디가 존재하지 않습니다");
         throw Exception('Login failed. Invalid username or password.');
       } else {
-        
+        Provider.of<LoginUser>(context, listen: false).setUser(_textController1.text);
+        print(Provider.of<LoginUser>(context, listen: false).user);
         Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => HomePage()),

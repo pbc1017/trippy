@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:trippy/models/question.dart';
 import 'package:trippy/HomePage.dart';
 import 'package:collection/collection.dart';
-
+import 'package:trippy/models/QuestionList.dart';
+import 'package:provider/provider.dart';
+import 'package:trippy/ResultPage.dart';
+import 'dart:convert';
 class QuestionPage extends StatefulWidget {
   final int currentQuestionId;
 
@@ -29,6 +32,7 @@ class _QuestionPageState extends State<QuestionPage> {
   });
   }
   void _nextQuestion() {
+    Provider.of<QuestionList>(context, listen: false).results.add(currentQuestion.rating);
   int nextQuestionId = currentQuestion.id + 1;
 
   Question? nextQuestion = questions.firstWhereOrNull(
@@ -37,9 +41,14 @@ class _QuestionPageState extends State<QuestionPage> {
 
   if (nextQuestion == null) {
     // If there's no next question, navigate to ResultPage
+    Map<String, double> weightedAverages = Provider.of<QuestionList>(context, listen: false).calculateWeightedAverages();
+    String json = jsonEncode(weightedAverages); // Convert to JSON
+
+    print(json); // Output the JSON string
+     Provider.of<QuestionList>(context, listen: false).results.clear();
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => HomePage()),
+      MaterialPageRoute(builder: (context) => ResultPage()),
     );
   } else {
     setState(() {
@@ -54,6 +63,7 @@ class _QuestionPageState extends State<QuestionPage> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: Stack(
         children: [
