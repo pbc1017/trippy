@@ -43,6 +43,7 @@ class _SignUpPageState extends State<SignUpPage>{
   if (response.statusCode == 200) {
     // If the server returns a 200 OK response, parse the JSON.
     print('Success: ${response.body}');
+    
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.

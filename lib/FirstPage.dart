@@ -12,7 +12,7 @@ class FirstPage extends StatelessWidget{
           MainFirstPageWidget(),
           SlidingUpPanel(
             panel: FirstSlidePage(),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.only(topLeft:Radius.circular(20), topRight: Radius.circular(20)),
             
             )
           ],
