@@ -1,6 +1,7 @@
 const { MongoClient, ServerApiVersion ,ObjectId} = require('mongodb');
 const express=require('express');
 const { spawn } = require('child_process');
+const haversine = require('haversine-distance');
 const path = require('path');
 // const prompt=require('prompt-sync')({singint:true});
 
@@ -82,6 +83,79 @@ app.get('/api/recommand',async (req, res) => {
     });
   } catch {
     console.log("catch");
+  }
+});
+
+app.post('/api/search', async (req, res) => {
+  try {
+    console.log(req.query);
+    await client.connect();
+    const points = req.body.points;
+    let center = [0, 0];
+    if (points.length > 0) {
+      const totalLatitude = points.reduce((sum, point) => sum + point.latitude, 0);
+      const totalLongitude = points.reduce((sum, point) => sum + point.longitude, 0);
+
+      center = [totalLatitude / points.length, totalLongitude / points.length];
+    }
+
+    const db = client.db('trippy');
+    const collections = {
+      all: [db.collection('travel'), db.collection('food'), db.collection('hotel')],
+      travel: [db.collection('travel')],
+      food: [db.collection('food')],
+      hotel: [db.collection('hotel')],
+    };
+
+    const type = req.body.type || 'all';
+    console.log(type);
+
+    const keyword = req.query.query || "";
+    const keywordRegex = new RegExp(keyword, 'i');
+
+    let results = [];
+    for (let collection of collections[type]) {
+      const query = keyword ? {
+        $or: [
+          { name: keywordRegex },
+          { address: keywordRegex },
+          { oneliner: keywordRegex },
+          { type: keywordRegex }
+        ]
+      } : {};
+      const result = await collection.find(query).toArray();
+      
+      result.forEach(item => {
+        if (item.location) {
+          const location = item.location.match(/[\d\.]+/g).map(Number);
+          const distance = haversine(center, location) / 1000;  // Convert distance from meters to km
+          if (type === 'hotel' || distance <= 5) {  // No distance limit for 'hotel'
+            item.distance = distance;
+            item.type = type;
+            results.push(item);
+          }
+        }
+      });
+    }
+
+    results = results.map(item => {
+      const normalizedReviewNum = item.reviewNum / 500;
+      const normalizedReviewRate = item.reviewRate / 5;
+      const normalizedDistance = item.distance / 5;  // Assume the maximum distance of interest is 5km
+
+      item.score = normalizedReviewNum * 0.2 + normalizedReviewRate * 0.2 + (1 - normalizedDistance) * 0.6;
+      if (item.id.includes('travel')) {
+        item.score += 0.2;
+      }
+      return item;
+    });
+
+    results.sort((a, b) => b.score - a.score);
+
+    res.status(200).json(results);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred while processing your request.' });
   }
 });
 
