@@ -71,6 +71,7 @@ Widget build(BuildContext context) {
               expandedHeight: 300.0,
               floating: false,
               pinned: true,
+              backgroundColor: Colors.green,
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 background: Image.network(
@@ -161,25 +162,40 @@ Widget build(BuildContext context) {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text("Day ${dayIndex+1}"),
-          FloatingActionButton(
-            heroTag: "addButton$dayIndex",  // Add unique heroTag
-            mini: true, 
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SpotSearch(courses: dayCourses,detailType: 2, courseNum: widget.courseNum, totalIndex:widget.totalIndex, type: "all"),
-                ),
-              );
-            },
-            child: const Icon(Icons.add),
-            backgroundColor: Colors.green,
+          Row(  // Wrap the buttons into a Row
+            children: <Widget>[
+              FloatingActionButton(
+                heroTag: "addButton$dayIndex",  // Add unique heroTag
+                mini: true, 
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SpotSearch(courses: dayCourses, detailType: 2, courseNum: widget.courseNum, totalIndex:widget.totalIndex, type: "all"),
+                    ),
+                  );
+                },
+                child: const Icon(Icons.add),
+                backgroundColor: Colors.green,
+              ),
+              SizedBox(width: 10),  // provide some spacing between the buttons
+              FloatingActionButton(
+                heroTag: "reserveButton$dayIndex",  // Add unique heroTag
+                mini: true,
+                onPressed: () {
+                  // TODO: add your code for reservation action here
+                },
+                child: const Icon(Icons.calendar_today),  // for example, using calendar icon for reservation button
+                backgroundColor: Colors.blue,
+              ),
+            ],
           ),
         ],
       ),
     ),
   );
 }
+
 
   Widget _buildSpotWidget(List<Course> dayCourses, int index, int day, int totalIndex) {
     if (day == 1) {

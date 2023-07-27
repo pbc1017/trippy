@@ -43,6 +43,11 @@ class _SignUpPageState extends State<SignUpPage>{
   if (response.statusCode == 200) {
     // If the server returns a 200 OK response, parse the JSON.
     print('Success: ${response.body}');
+    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BeforeQuestionPage()),
+                  );
+    
     
   } else {
     // If the server did not return a 200 OK response,

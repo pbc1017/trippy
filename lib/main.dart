@@ -231,7 +231,7 @@ class _InputPageState extends State<InputPage> {
               MaterialPageRoute(builder: (context) => SignUpPage()),
             );
           },
-          child: Text("You don't have an account yet? Sign in", style: TextStyle(
+          child: Text("You don't have an account yet? Sign Up", style: TextStyle(
             fontFamily: 'Dmsans',
             fontWeight: FontWeight.w500,
             color: Colors.black,

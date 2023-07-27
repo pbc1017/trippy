@@ -154,21 +154,7 @@ class FirstSlidePage extends StatelessWidget{
               ),
             ),
           ),
-          Container(
-            height: 200.0,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Container(
-                  height: 100.0,
-                  child: Card(
-                    child: Text('Vertical Item $index'),
-                  )
-                );
-              },
-            ),
-          ),
+
         ],
       ),
     );

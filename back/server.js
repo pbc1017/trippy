@@ -38,13 +38,15 @@ app.post('/api/signin',async (req,res)=>{
 
 app.post('/api/signup',async (req,res)=>{
   try{
+    res.status(200).json("Success");
     console.log(req.body);
     await client.connect();
     userdata=client.db('trippy').collection('User');
     userdata.insertOne(req.body,function(err,res){
       if (err) throw err;
-    console.log("1 document inserted");
+    
     })
+    
   }
   catch{
     console.log("Catch");

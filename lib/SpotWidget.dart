@@ -8,6 +8,7 @@ class SpotWidget extends StatefulWidget {
   final int courseNum;
   final int totalIndex;
   final int detailType;
+  bool isReserved = false;  // Add this line
 
   SpotWidget({Key? key, required this.course, required this.index, required this.courseNum, required this.totalIndex, required this.detailType}) : super(key: key);
 

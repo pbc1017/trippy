@@ -227,7 +227,7 @@ class _SecondPageState extends State<SecondPage> {
               shrinkWrap: true,
               itemCount: courseList.courses.length,  // Use the number of courseLists (i.e., number of days)
               itemBuilder: (BuildContext context, int index) {
-                String title = "AI 추천 코스 ${index + 1}";  // Create title based on the index
+                String title = "Urban Explorer Course ${index + 1} ";  // Create title based on the index
                 return CourseWidget(
                   dayIndex: index,
                   index: 0,
