@@ -28,7 +28,7 @@ MadCamp Week4 4분반 TRIPPY팀
 
 ### c. 어플리케이션 소개
 
-### Page 0 - Login/SignUp
+## Page 0 - Login/SignUp
 
 ***Major features***
 
@@ -47,7 +47,7 @@ MadCamp Week4 4분반 TRIPPY팀
 
 ---
 
-### Page 1 - Home
+## Page 1 - Home
 
 ***Major features***
 
@@ -69,7 +69,7 @@ MadCamp Week4 4분반 TRIPPY팀
 
 ---
 
-### Page 2 - Search
+## Page 2 - Search
 
 ***Major features***
 
@@ -91,7 +91,7 @@ MadCamp Week4 4분반 TRIPPY팀
 
 ---
 
-### Page 3 - Course Detail
+## Page 3 - Course Detail
 
 ***Major features***
 
@@ -113,7 +113,7 @@ MadCamp Week4 4분반 TRIPPY팀
 
 ---
 
-### Page 4 - Map
+## Page 4 - Map
 
 ***Major features***
 
@@ -135,7 +135,7 @@ MadCamp Week4 4분반 TRIPPY팀
 
 ---
 
-### Page 5 - Reservation Manager
+## Page 5 - Reservation Manager
 
 ***Major features***
 
@@ -145,8 +145,6 @@ MadCamp Week4 4분반 TRIPPY팀
 - 상세정보창에서 이메일, 전화, 메세지 버튼을 누르면 해당 기능을 수행할 수 있습니다.
 - search contacts에서 찾고자 하는 연락처를 filtering 할 수 있습니다.
 - 연락처를 길게 누를시에 삭제할 수 있습니다.
-
----
 
 ***기술설명***
 
