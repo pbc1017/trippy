@@ -26,11 +26,11 @@ MadCamp Week4 4분반 TRIPPY팀
 
 ## Page 0 - Login/SignUp
 
-<img src="https://github.com/pbc1017/trippy/assets/63749140/a5b68119-9697-465b-88cc-626a82a33ae3" width="190"/> 
-<img src="https://github.com/pbc1017/trippy/assets/63749140/6b1685f8-3cc3-4c40-aa53-50e91020b58e" width="190"/> 
-<img src="https://github.com/pbc1017/trippy/assets/63749140/24535037-a624-41a4-94c5-d28724370558" width="190"/> 
-<img src="https://github.com/pbc1017/trippy/assets/63749140/13630b6f-9c71-4c81-8b32-078f42ea1511" width="190"/> 
-<img src="https://github.com/pbc1017/trippy/assets/63749140/98f71dba-26a4-4f1a-b4c4-1202a9b7a8df" width="190"/>
+<img src="https://github.com/pbc1017/trippy/assets/63749140/a5b68119-9697-465b-88cc-626a82a33ae3" width="180"/> 
+<img src="https://github.com/pbc1017/trippy/assets/63749140/6b1685f8-3cc3-4c40-aa53-50e91020b58e" width="180"/> 
+<img src="https://github.com/pbc1017/trippy/assets/63749140/24535037-a624-41a4-94c5-d28724370558" width="180"/> 
+<img src="https://github.com/pbc1017/trippy/assets/63749140/13630b6f-9c71-4c81-8b32-078f42ea1511" width="180"/> 
+<img src="https://github.com/pbc1017/trippy/assets/63749140/98f71dba-26a4-4f1a-b4c4-1202a9b7a8df" width="180"/>
 
 ***Major features***
 
@@ -47,8 +47,7 @@ MadCamp Week4 4분반 TRIPPY팀
 
 ## Page 1 - Home
 
-초기 화면 페이지
-https://github.com/pbc1017/trippy/assets/63749140/dbb0a862-6e98-4236-8e87-6bf2abe2eeff
+<img src="https://github.com/pbc1017/trippy/assets/63749140/dbb0a862-6e98-4236-8e87-6bf2abe2eeff" width="180"/>
 
 ***Major features***
 
@@ -68,8 +67,7 @@ https://github.com/pbc1017/trippy/assets/63749140/dbb0a862-6e98-4236-8e87-6bf2ab
 
 ## Page 2 - Search
 
-검색 화면 페이지
-https://github.com/pbc1017/trippy/assets/63749140/e11aa594-842d-4e97-8e30-cb9bc5e22309
+<img src="https://github.com/pbc1017/trippy/assets/63749140/e11aa594-842d-4e97-8e30-cb9bc5e22309" width="180"/>
 
 ***Major features***
 
@@ -89,12 +87,9 @@ https://github.com/pbc1017/trippy/assets/63749140/e11aa594-842d-4e97-8e30-cb9bc5
 
 ## Page 3 - Course Detail
 
-추가 페이지
-https://github.com/pbc1017/trippy/assets/63749140/b29b0ca7-80a6-46ce-b8bf-b66b544f7733
-상세 코스 페이지
-https://github.com/pbc1017/trippy/assets/63749140/9b724b18-7627-46a0-87f5-2e1f6c283c29
-상세 스팟 페이지
-https://github.com/pbc1017/trippy/assets/63749140/a043ca1a-64d2-4315-9901-72e5e78f7207
+<img src="https://github.com/pbc1017/trippy/assets/63749140/b29b0ca7-80a6-46ce-b8bf-b66b544f7733" width="180"/>
+<img src="https://github.com/pbc1017/trippy/assets/63749140/9b724b18-7627-46a0-87f5-2e1f6c283c29" width="180"/>
+<img src="https://github.com/pbc1017/trippy/assets/63749140/a043ca1a-64d2-4315-9901-72e5e78f7207" width="180"/>
 ***Major features***
 
 - initial의 자음으로 그룹별로 연락처에 나타납니다.
@@ -112,8 +107,7 @@ https://github.com/pbc1017/trippy/assets/63749140/a043ca1a-64d2-4315-9901-72e5e7
 - 연락처 삭제를 구현하기 위해 전역변수를 선언하여 삭제된 연락처를 저장했습니다.
 
 ## Page 4 - Map
-지도 페이지
-https://github.com/pbc1017/trippy/assets/63749140/905da69d-6d04-479a-bb12-a2849d227827
+<img src="https://github.com/pbc1017/trippy/assets/63749140/905da69d-6d04-479a-bb12-a2849d227827" width="180"/>
 ***Major features***
 
 - initial의 자음으로 그룹별로 연락처에 나타납니다.
@@ -131,10 +125,8 @@ https://github.com/pbc1017/trippy/assets/63749140/905da69d-6d04-479a-bb12-a2849d
 - 연락처 삭제를 구현하기 위해 전역변수를 선언하여 삭제된 연락처를 저장했습니다.
 
 ## Page 5 - Reservation Manager
-예약 페이지
-https://github.com/pbc1017/trippy/assets/63749140/9538768e-29fa-495a-bcaa-f5c0fc653a28
-예약 페이지2
-https://github.com/pbc1017/trippy/assets/63749140/9b52862d-f9d6-4860-8089-bbbfaee60137
+<img src="https://github.com/pbc1017/trippy/assets/63749140/9538768e-29fa-495a-bcaa-f5c0fc653a28" width="180"/>
+<img src="https://github.com/pbc1017/trippy/assets/63749140/9b52862d-f9d6-4860-8089-bbbfaee60137" width="180"/>
 ***Major features***
 
 - initial의 자음으로 그룹별로 연락처에 나타납니다.
