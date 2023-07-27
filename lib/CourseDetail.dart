@@ -37,141 +37,126 @@ class _CourseDetailState extends State<CourseDetail> {
     bool _isFavorited = favoriteCourseIndex.favoriteDayIndex == widget.dayIndex;
 
     return Scaffold(
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Container(
-                height: 200,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(day1Courses[0].img),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(Colors.grey.withOpacity(0.8), BlendMode.srcOver),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 50),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: BackButton(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.title,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 24, color: Colors.white)
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 20),
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  if (_isFavorited) {
-                                    favoriteCourseIndex.clearFavoriteIndex();
-                                  } else {
-                                    favoriteCourseIndex.setFavoriteIndex(widget.dayIndex,0);
-                                  }
-                                });
-                              },
-                              child: Icon(
-                                _isFavorited ? Icons.favorite : Icons.favorite_border,
-                                color: _isFavorited ? Colors.red : Colors.white,
-                                size: 30,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+              expandedHeight: 300.0,
+              floating: false,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Image.network(day1Courses[0].img, fit: BoxFit.cover),
+                title: Text(widget.title),
+                centerTitle: true, // Title 가운데 정렬 추가
+                titlePadding: EdgeInsets.only(bottom: 20), // 좌측 패딩만 제거
               ),
-              Expanded(
-                child: ListView(
-                  children: [
-                    
-                    // Repeat for each day
-                  // Repeat for each day
-                    for (var i = 0; i < 3; i++)
-                      Column(
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                color: Colors.grey[200],
-                                height: 70,  // adjust as needed
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("Day $i"),
-                                    FloatingActionButton(
-                                      mini: true, 
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => SpotSearch(courses: day1Courses, type: "all"),
-                                          ),
-                                        );
-                                      },
-                                      child: const Icon(Icons.add),
-                                      backgroundColor: Colors.green,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          ReorderableListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: day1Courses.length,
-                            itemBuilder: (context, index) {
-                              return SpotWidget(
-                                key: Key(day1Courses[index].id),
-                                course: day1Courses[index],
-                              );
-                            },
-                            onReorder: (int oldIndex, int newIndex) {
-                              setState(() {
-                                if (oldIndex < newIndex) {
-                                  newIndex -= 1;
-                                }
-                                final Course item = day1Courses.removeAt(oldIndex);
-                                day1Courses.insert(newIndex, item);
-                                context.read<CourseList>().reorderCourses(widget.dayIndex, oldIndex, newIndex);
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-
-
-                  ],
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    _isFavorited ? Icons.favorite : Icons.favorite_border,
+                    color: _isFavorited ? Colors.red : Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      if (_isFavorited) {
+                        favoriteCourseIndex.clearFavoriteIndex();
+                      } else {
+                        favoriteCourseIndex.setFavoriteIndex(widget.dayIndex, 0);
+                      }
+                    });
+                  },
                 ),
-              ),
-            ],
+              ],
+            ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                // Header for Day 1
+                if (index == 0) {
+                  return _buildDayHeader(index, day1Courses);
+                } 
+                // Items for Day 1
+                else if (index > 0 && index <= day1Courses.length + 1) {
+                  return _buildSpotWidget(day1Courses, index-1);
+                }
+                // Header for Day 2
+                else if (index == day1Courses.length + 2) {
+                  return _buildDayHeader(index, day2Courses);
+                }
+                // Items for Day 2
+                else if (index > day1Courses.length + 2 && index <= day1Courses.length + day2Courses.length + 2) {
+                  return _buildSpotWidget(day2Courses, index - day1Courses.length - 3);
+                }
+                // Header for Day 3
+                else if (index == day1Courses.length + day2Courses.length + 3) {
+                  return _buildDayHeader(index, day3Courses);
+                }
+                // Items for Day 3
+                else if (index > day1Courses.length + day2Courses.length + 3 && index <= day1Courses.length + day2Courses.length + day3Courses.length + 3) {
+                  return _buildSpotWidget(day3Courses, index - day1Courses.length - day2Courses.length - 4);
+                }
+                // End of List
+                else {
+                  return null;
+                }
+              },
+            ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildDayHeader(int index, List<Course> dayCourses) {
+    return Container(
+      color: Colors.grey[200],
+      height: 70,  // adjust as needed
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Day ${index + 1}"),
+            FloatingActionButton(
+              mini: true, 
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SpotSearch(courses: dayCourses, type: "all"),
+                  ),
+                );
+              },
+              child: const Icon(Icons.add),
+              backgroundColor: Colors.green,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSpotWidget(List<Course> dayCourses, int index) {
+    return ReorderableListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: dayCourses.length,
+      itemBuilder: (context, idx) {
+        return SpotWidget(
+          key: Key(dayCourses[idx].id),
+          course: dayCourses[idx],
+        );
+      },
+      onReorder: (int oldIndex, int newIndex) {
+        setState(() {
+          if (oldIndex < newIndex) {
+            newIndex -= 1;
+          }
+          final Course item = dayCourses.removeAt(oldIndex);
+          dayCourses.insert(newIndex, item);
+          context.read<CourseList>().reorderCourses(widget.dayIndex, oldIndex, newIndex);
+        });
+      },
     );
   }
 }
