@@ -26,15 +26,11 @@ MadCamp Week4 4분반 TRIPPY팀
 
 ## Page 0 - Login/SignUp
 
-<image src="https://github.com/pbc1017/trippy/assets/63749140/a5b68119-9697-465b-88cc-626a82a33ae3" />
-
-<image src="https://github.com/pbc1017/trippy/assets/63749140/6b1685f8-3cc3-4c40-aa53-50e91020b58e" />
-
-<image src="https://github.com/pbc1017/trippy/assets/63749140/24535037-a624-41a4-94c5-d28724370558" />
-
-<image src="https://github.com/pbc1017/trippy/assets/63749140/13630b6f-9c71-4c81-8b32-078f42ea1511" />
-
-<image src="https://github.com/pbc1017/trippy/assets/63749140/98f71dba-26a4-4f1a-b4c4-1202a9b7a8df" />
+<img src="https://github.com/pbc1017/trippy/assets/63749140/a5b68119-9697-465b-88cc-626a82a33ae3" width="180"/> 
+<img src="https://github.com/pbc1017/trippy/assets/63749140/6b1685f8-3cc3-4c40-aa53-50e91020b58e" width="180"/> 
+<img src="https://github.com/pbc1017/trippy/assets/63749140/24535037-a624-41a4-94c5-d28724370558" width="180"/> 
+<img src="https://github.com/pbc1017/trippy/assets/63749140/13630b6f-9c71-4c81-8b32-078f42ea1511" width="180"/> 
+<img src="https://github.com/pbc1017/trippy/assets/63749140/98f71dba-26a4-4f1a-b4c4-1202a9b7a8df" width="180"/>
 
 ***Major features***
 
