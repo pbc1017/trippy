@@ -17,6 +17,7 @@ class SpotSearch extends StatefulWidget {
 
 class _SpotSearchState extends State<SpotSearch> {
   List<Course> spots = [];
+  final TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
@@ -24,7 +25,7 @@ class _SpotSearchState extends State<SpotSearch> {
     fetchSpots();
   }
 
-  fetchSpots() async {
+  fetchSpots([String query = '']) async {
     var points = widget.courses.map((course) => {
       "id": course.id,
       "latitude": course.latitude,
@@ -37,7 +38,7 @@ class _SpotSearchState extends State<SpotSearch> {
     });
 
     var response = await http.post(
-      Uri.parse("http://localhost:80/api/search?query="),
+      Uri.parse("http://localhost:80/api/search?query=$query"),
       headers: {"Content-Type": "application/json"},
       body: body,
     );
@@ -53,14 +54,34 @@ class _SpotSearchState extends State<SpotSearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Spot Search"),
-      ),
-      body: ListView.builder(
-        itemCount: spots.length,
-        itemBuilder: (context, index) {
-          return SpotWidget(course: spots[index]);
-        },
+      body: Stack(
+        children: [
+          ListView.builder(
+            itemCount: spots.length,
+            itemBuilder: (context, index) {
+              return SpotWidget(course: spots[index]);
+            },
+          ),
+          SafeArea(
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                children: [
+                  BackButton(color: Colors.black),
+                  Expanded(
+                    child: TextField(
+                      controller: _textController,
+                      decoration: InputDecoration(
+                        hintText: "Search...",
+                      ),
+                      onSubmitted: fetchSpots,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
