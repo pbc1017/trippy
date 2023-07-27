@@ -60,7 +60,7 @@ class SpotWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(height: 2.0),
-                      Text(course.name, style: TextStyle(color: Colors.black87, fontFamily: "Dmsans",fontWeight: FontWeight.w700, fontSize: 14),),
+                      Text(course.name, style: TextStyle(color: Colors.black87, fontFamily: "Air",fontWeight: FontWeight.w700, fontSize: 14),),
                       SizedBox(height: 2.0),
                       Text(spotType, style: TextStyle(color: Colors.black54, fontFamily: "Dmsans",fontWeight: FontWeight.w300, fontSize: 14),),
                       SizedBox(height: 2.0),

@@ -16,7 +16,7 @@ dependencies:
   kakao_map_plugin: ^0.1.6
   provider: ^5.0.0
   animated_notch_bottom_bar: ^1.0.0
-
+  google_fonts: ^4.0.4
   
 
 dev_dependencies:
@@ -48,3 +48,31 @@ flutter:
       fonts:
         - asset: assets/fonts/bm.ttf
           weight: 400
+    - family: As
+      fonts:
+        - asset: assets/fonts/SCDream1.otf
+          weight: 100
+        - asset: assets/fonts/SCDream2.otf
+          weight: 200
+        - asset: assets/fonts/SCDream3.otf
+          weight: 300
+        - asset: assets/fonts/SCDream4.otf
+          weight: 400
+        - asset: assets/fonts/SCDream5.otf
+          weight: 500
+        - asset: assets/fonts/SCDream6.otf
+          weight: 600
+        - asset: assets/fonts/SCDream7.otf
+          weight: 700
+        - asset: assets/fonts/SCDream8.otf
+          weight: 800
+        - asset: assets/fonts/SCDream9.otf
+          weight: 900
+    - family: Air
+      fonts:
+        - asset: assets/fonts/AirbnbCereal_W_Bk.otf
+          weight: 300
+        - asset: assets/fonts/AirbnbCereal_W_Md.otf
+          weight: 500
+        - asset: assets/fonts/AirbnbCereal_W_Bd.otf
+          weight: 700

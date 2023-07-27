@@ -28,18 +28,18 @@ class FirstSlidePage extends StatelessWidget{
           Align(
             alignment : Alignment.topLeft,
             child : Padding(
-              padding : EdgeInsets.only(top:10, left: 20),
-              child:
-                Text(
-                  'Recommended',
-                  style: TextStyle(
-                    fontFamily: "Dmsans",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 24
-                  ),
+              padding : EdgeInsets.only(left: 20),
+              child: Text(
+                'Recommended',
+                style: TextStyle(
+                  fontFamily: "Dmsans",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 24
                 ),
+              ),
             ),
           ),
+
           Padding(
             padding: EdgeInsets.all(10),
             child:

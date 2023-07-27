@@ -59,14 +59,12 @@ class _ThirdPageState extends State<ThirdPage>{
       "https://i.ibb.co/3kXHXct/pin-10.png",
       "https://i.ibb.co/yngCvnj/pin-11.png"]
     ];
-    // CourseList.courses[0][0];
     final favoriteCourseIndex = Provider.of<FavoriteCourseIndex>(context);
     final courseList = Provider.of<CourseList>(context);
     List<List<double>> latlng = [[0, 0],[0, 0],[0, 0]];
     List<int> cnt = [0,0,0];
     if (favoriteCourseIndex.favoriteDayIndex>-1) {
       final List<Course> favoriteCourse = courseList.courses[favoriteCourseIndex.favoriteDayIndex];
-      // markers.add(Marker(markerImageSrc: pinUrls[0][0],latLng: LatLng(37.499590490909185, 127.0263723554437),markerId: markers.length.toString(),width: 40, height: 50, offsetX:20, offsetY:50,));
       var index = 0;
       int thiscluster=0;
       for (var course in favoriteCourse) {
@@ -75,15 +73,11 @@ class _ThirdPageState extends State<ThirdPage>{
           index = 0;
         }
         thiscluster = course.cluster;
-        // Determine the index for pinUrls based on the course's id
-        // print(course.id);
         if (course.id.contains("food")) {
           markerImageSrc = pinUrls[course.cluster][6];
         } else if (course.id.contains("hotel")) {
           markerImageSrc = pinUrls[course.cluster][7];
         } else {
-          // For other cases, determine the index based on the order of the course in the list
-          // Use modulus to ensure that index is within the range of pinUrls[course.cluster]
           markerImageSrc = pinUrls[course.cluster][index];
           index += 1;
         }
@@ -92,8 +86,6 @@ class _ThirdPageState extends State<ThirdPage>{
           latlng[course.cluster][1] += course.longitude;
           cnt[course.cluster] += 1;
         }
-
-        // Add the marker with the determined markerImageSrc and the course's latitude and longitude
         markers.add(
           Marker(
             markerImageSrc: markerImageSrc,
@@ -103,9 +95,6 @@ class _ThirdPageState extends State<ThirdPage>{
             height: 50,
             offsetX: 20,
             offsetY: 50,
-            // infoWindowContent: '<p style="background-color: white; padding: 5px; border-radius: 8px;">${course.name}</p>',
-            // infoWindowRemovable: true,
-            // infoWindowFirstShow: false,
           )
         );
       }
@@ -117,61 +106,91 @@ class _ThirdPageState extends State<ThirdPage>{
     else {
       latlng = [[35.1379222, 129.11562775],[35.1379222, 129.11562775],[35.1379222, 129.11562775]];
     }
-    // print(latlng);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(""),
-      ),
       body: Stack(
         children: [
           KakaoMap(
             onMapCreated: ((controller) async {
               mapController = controller;
-
               setState(() {});
             }),
             markers: markers.toList(),
             center: LatLng(35.1379222, 129.11562775),
             currentLevel: 9,
             onMarkerTap: (markerId, latLng, zoomLevel) {
-              // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('marker click:\n\n$latLng')));
-              
             },
           ),
-          Row(
-            children: [
-              MaterialButton(
-                onPressed: () {
-                  buttonType = ButtonType.coffee;
-                  setState(() {});
-                  mapController.setCenter(LatLng(latlng[0][0], latlng[0][1]));
-                  mapController.setLevel(7);
-                },
-                color: buttonType == ButtonType.coffee ? Colors.blue : Colors.grey,
-                child: const Text('Day 1'),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: Container(
+                    color: Colors.white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child: MaterialButton(
+                            height: 50.0,
+                            onPressed: () {
+                              buttonType = ButtonType.coffee;
+                              setState(() {});
+                              mapController.setCenter(LatLng(latlng[0][0], latlng[0][1]));
+                              mapController.setLevel(7);
+                            },
+                            color: buttonType == ButtonType.coffee ? Colors.green : Colors.white,
+                            child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(),
+          child: Text('Day 1', style: TextStyle(fontSize: 16.0, color: buttonType == ButtonType.coffee ? Colors.white : Colors.green)),
+                                ),
+                              ),
+                          ),
+                        ),
+                        Expanded(
+                          child: MaterialButton(
+                            height: 50.0,
+                            onPressed: () {
+                              buttonType = ButtonType.store;
+                              setState(() {});
+                              mapController.setCenter(LatLng(latlng[1][0], latlng[1][1]));
+                              mapController.setLevel(7);
+                            },
+                            color: buttonType == ButtonType.store ? Colors.green : Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.only(),
+          child: Text('Day 2', style: TextStyle(fontSize: 16.0, color: buttonType == ButtonType.store ? Colors.white : Colors.green)),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: MaterialButton(
+                            height: 50.0,
+                            onPressed: () {
+                              buttonType = ButtonType.carpark;
+                              setState(() {});
+                              mapController.setCenter(LatLng(latlng[2][0], latlng[2][1]));
+                              mapController.setLevel(7);
+                            },
+                            color: buttonType == ButtonType.carpark ?Colors.green : Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.only(),
+          child: Text('Day 3', style: TextStyle(fontSize: 16.0, color: buttonType == ButtonType.carpark? Colors.white : Colors.green)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              MaterialButton(
-                onPressed: () {
-                  buttonType = ButtonType.store;
-                  setState(() {});
-                  mapController.setCenter(LatLng(latlng[1][0], latlng[1][1]));
-                  mapController.setLevel(7);
-                },
-                color: buttonType == ButtonType.store? Colors.blue : Colors.grey,
-                child: const Text('Day 2'),
-              ),
-              MaterialButton(
-                onPressed: () {
-                  buttonType = ButtonType.carpark;
-                  setState(() {});
-                  mapController.setCenter(LatLng(latlng[2][0], latlng[2][1]));
-                  mapController.setLevel(7);
-                },
-                color: buttonType == ButtonType.carpark? Colors.blue : Colors.grey,
-                child: const Text('Day 3'),
-              ),
-            ],
-          )
+            ),
+          ),
         ],
       ),
     );

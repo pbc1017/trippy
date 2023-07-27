@@ -4,8 +4,8 @@ import 'package:trippy/CourseWidget.dart';
 import 'package:trippy/models/CourseList.dart';
 import 'package:provider/provider.dart';
 import 'package:trippy/main.dart';
-
 import 'CourseDetail.dart';
+import 'SpotDetail.dart';
 
 class CourseWidget extends StatefulWidget {
   final int dayIndex; 
