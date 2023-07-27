@@ -50,6 +50,8 @@ class FourthSlidePage extends StatelessWidget {
                           title: 'Your Course Detail',
                           dayIndex: index,
                           index: 0,
+                          courseNum: 0,
+                          totalIndex: 0,
                         ),
                       ),
                     );

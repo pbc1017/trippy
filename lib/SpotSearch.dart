@@ -8,8 +8,11 @@ import 'package:trippy/SpotWidget.dart';
 class SpotSearch extends StatefulWidget {
   final List<Course> courses;
   final String type;
+  final int detailType;
+  final int courseNum;
+  final int totalIndex;
 
-  SpotSearch({Key? key, required this.courses, required this.type}) : super(key: key);
+  SpotSearch({Key? key, required this.courses, required this.type, required this.courseNum, required this.totalIndex, required this.detailType}) : super(key: key);
 
   @override
   _SpotSearchState createState() => _SpotSearchState();
@@ -59,7 +62,7 @@ class _SpotSearchState extends State<SpotSearch> {
           ListView.builder(
             itemCount: spots.length,
             itemBuilder: (context, index) {
-              return SpotWidget(course: spots[index]);
+              return SpotWidget(course: spots, index:index, courseNum: widget.courseNum, totalIndex: widget.totalIndex, detailType: widget.detailType);
             },
           ),
           SafeArea(

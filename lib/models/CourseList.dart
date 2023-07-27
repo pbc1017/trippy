@@ -16,8 +16,17 @@ class CourseList with ChangeNotifier {
     notifyListeners();
   }
 
+  void replaceCourse(int dayIndex, int index, Course course) {
+    _courses[dayIndex][index] = course;
+    print(_courses[dayIndex][index].name);
+    notifyListeners();
+  }
+
   void removeCourse(int dayIndex, int index) {
+    print("removeCourse called with dayIndex=$dayIndex and index=$index");
+    print("Before course removed, courses are ${_courses[dayIndex].length}");
     _courses[dayIndex].removeAt(index);
+    print("Course removed, now courses are ${_courses[dayIndex].length}");
     notifyListeners();
   }
 

@@ -88,15 +88,19 @@ app.get('/api/recommand',async (req, res) => {
 
 app.post('/api/search', async (req, res) => {
   try {
-    console.log(req.query);
+    console.log(req.body);
     await client.connect();
     const points = req.body.points;
     let center = [0, 0];
+    let noPointsProvided = false;
+
     if (points.length > 0) {
       const totalLatitude = points.reduce((sum, point) => sum + point.latitude, 0);
       const totalLongitude = points.reduce((sum, point) => sum + point.longitude, 0);
 
       center = [totalLatitude / points.length, totalLongitude / points.length];
+    } else {
+      noPointsProvided = true;
     }
 
     const db = client.db('trippy');
@@ -129,9 +133,12 @@ app.post('/api/search', async (req, res) => {
         if (item.location) {
           const location = item.location.match(/[\d\.]+/g).map(Number);
           const distance = haversine(center, location) / 1000;  // Convert distance from meters to km
-          if (type === 'hotel' || distance <= 5) {  // No distance limit for 'hotel'
+          if (type === 'hotel' || noPointsProvided || distance <= 5) {  // No distance limit for 'hotel' or when no points are provided
             item.distance = distance;
             item.type = type;
+            item.latitude = location[0];
+            item.longitude = location[1];
+            delete item.location;
             results.push(item);
           }
         }
@@ -158,6 +165,7 @@ app.post('/api/search', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while processing your request.' });
   }
 });
+
 
 server.listen(80,main);
 
