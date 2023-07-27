@@ -90,6 +90,7 @@ MadCamp Week4 4분반 TRIPPY팀
 <img src="https://github.com/pbc1017/trippy/assets/63749140/b29b0ca7-80a6-46ce-b8bf-b66b544f7733" width="180"/>
 <img src="https://github.com/pbc1017/trippy/assets/63749140/9b724b18-7627-46a0-87f5-2e1f6c283c29" width="180"/>
 <img src="https://github.com/pbc1017/trippy/assets/63749140/a043ca1a-64d2-4315-9901-72e5e78f7207" width="180"/>
+
 ***Major features***
 
 - initial의 자음으로 그룹별로 연락처에 나타납니다.
@@ -108,6 +109,7 @@ MadCamp Week4 4분반 TRIPPY팀
 
 ## Page 4 - Map
 <img src="https://github.com/pbc1017/trippy/assets/63749140/905da69d-6d04-479a-bb12-a2849d227827" width="180"/>
+
 ***Major features***
 
 - initial의 자음으로 그룹별로 연락처에 나타납니다.
@@ -127,6 +129,7 @@ MadCamp Week4 4분반 TRIPPY팀
 ## Page 5 - Reservation Manager
 <img src="https://github.com/pbc1017/trippy/assets/63749140/9538768e-29fa-495a-bcaa-f5c0fc653a28" width="180"/>
 <img src="https://github.com/pbc1017/trippy/assets/63749140/9b52862d-f9d6-4860-8089-bbbfaee60137" width="180"/>
+
 ***Major features***
 
 - initial의 자음으로 그룹별로 연락처에 나타납니다.
