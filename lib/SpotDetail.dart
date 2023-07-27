@@ -75,7 +75,7 @@ class _SpotDetailState extends State<SpotDetail> {
           child: ElevatedButton(
             style: buttonStyle,
             onPressed: () {
-              Provider.of<CourseList>(context, listen: false).addCourse(widget.courseNum,widget.course[widget.index]);  // update `newCourse` with the actual Course instance
+              Provider.of<CourseList>(context, listen: false).insertCourse(widget.courseNum,widget.totalIndex,widget.course[widget.index]);  // update `newCourse` with the actual Course instance
               Navigator.pop(context);
               Navigator.pop(context);
             },

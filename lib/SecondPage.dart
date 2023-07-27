@@ -232,8 +232,6 @@ class _SecondPageState extends State<SecondPage> {
                   dayIndex: index,
                   index: 0,
                   title: title,  // Pass the title to the CourseWidget
-                  totalIndex: 0,
-                  courseNum: 0,
                 );
               },
             )

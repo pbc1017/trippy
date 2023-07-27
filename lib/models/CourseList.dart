@@ -16,6 +16,11 @@ class CourseList with ChangeNotifier {
     notifyListeners();
   }
 
+  void insertCourse(int dayIndex, int index, Course course) {
+    _courses[dayIndex].insert(index, course);
+    notifyListeners();
+  }
+
   void replaceCourse(int dayIndex, int index, Course course) {
     _courses[dayIndex][index] = course;
     print(_courses[dayIndex][index].name);

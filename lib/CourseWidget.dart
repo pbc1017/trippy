@@ -10,11 +10,9 @@ import 'SpotDetail.dart';
 class CourseWidget extends StatefulWidget {
   final int dayIndex; 
   final int index;
-  final int totalIndex;
-  final int courseNum;
   final String title;  // <-- Add this line
 
-  const CourseWidget({Key? key, required this.dayIndex, required this.index, required this.title, required this.courseNum, required this.totalIndex}) : super(key: key);  // <-- Modify this line
+  const CourseWidget({Key? key, required this.dayIndex, required this.index, required this.title,}) : super(key: key);  // <-- Modify this line
 
   @override
   _CourseWidgetState createState() => _CourseWidgetState();
@@ -34,7 +32,7 @@ class _CourseWidgetState extends State<CourseWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CourseDetail(course: course, title: widget.title, dayIndex: widget.dayIndex,index: widget.index, totalIndex: widget.totalIndex, courseNum: widget.courseNum,),
+            builder: (context) => CourseDetail(course: course, title: widget.title, dayIndex: widget.dayIndex,index: widget.index, ),
           ),
         );
       },

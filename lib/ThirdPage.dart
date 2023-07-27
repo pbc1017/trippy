@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
+import 'SpotDetail.dart';
 import 'main.dart';
 import 'models/CourseList.dart';
 import 'package:provider/provider.dart';
@@ -67,7 +68,8 @@ class _ThirdPageState extends State<ThirdPage>{
       final List<Course> favoriteCourse = courseList.courses[favoriteCourseIndex.favoriteDayIndex];
       var index = 0;
       int thiscluster=0;
-      for (var course in favoriteCourse) {
+      for (var i = 0; i < favoriteCourse.length; i++) {
+        var course = favoriteCourse[i];
         String markerImageSrc;
         if (thiscluster != course.cluster) {
           index = 0;
@@ -90,7 +92,7 @@ class _ThirdPageState extends State<ThirdPage>{
           Marker(
             markerImageSrc: markerImageSrc,
             latLng: LatLng(course.latitude, course.longitude),
-            markerId: markers.length.toString(),
+            markerId: i.toString(),
             width: 40,
             height: 50,
             offsetX: 20,
@@ -118,6 +120,13 @@ class _ThirdPageState extends State<ThirdPage>{
             center: LatLng(35.1379222, 129.11562775),
             currentLevel: 9,
             onMarkerTap: (markerId, latLng, zoomLevel) {
+              final List<Course> favoriteCourse = courseList.courses[favoriteCourseIndex.favoriteDayIndex];
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SpotDetail(course: favoriteCourse, index: int.parse(markerId), courseNum: 0, totalIndex: 0, detailType: 0),  // detailType is 0 as an example
+                ),
+              );
             },
           ),
           Positioned(

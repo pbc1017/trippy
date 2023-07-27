@@ -10,12 +10,10 @@ import 'SpotSearch.dart';
 class CourseDetail extends StatefulWidget {
   final int dayIndex; 
   final int index;
-  final int courseNum;
-  final int totalIndex;
   final List<Course> course;
   final String title;
 
-  CourseDetail({Key? key, required this.dayIndex, required this.course, required this.courseNum,required this.totalIndex, required this.title, required this.index}) : super(key: key);
+  CourseDetail({Key? key, required this.dayIndex, required this.course, required this.title, required this.index}) : super(key: key);
 
   @override
   _CourseDetailState createState() => _CourseDetailState();
@@ -171,7 +169,7 @@ Widget build(BuildContext context) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SpotSearch(courses: dayCourses, detailType: 2, courseNum: widget.courseNum, totalIndex:widget.totalIndex, type: "all"),
+                      builder: (context) => SpotSearch(courses: dayCourses, detailType: 2, courseNum: widget.dayIndex, totalIndex:0, type: "all"),
                     ),
                   );
                 },
@@ -199,10 +197,10 @@ Widget build(BuildContext context) {
 
   Widget _buildSpotWidget(List<Course> dayCourses, int index, int day, int totalIndex) {
     if (day == 1) {
-      totalIndex += day2Courses.length;
+      totalIndex += day1Courses.length;
     }
     else if (day == 2) {
-      totalIndex = totalIndex + day2Courses.length + day3Courses.length;
+      totalIndex = totalIndex + day1Courses.length + day2Courses.length;
     }
     return SpotWidget(
       key: Key(dayCourses[index].id),
