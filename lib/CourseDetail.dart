@@ -38,7 +38,15 @@ class _CourseDetailState extends State<CourseDetail> {
       }
       final Course course = dayCourses.removeAt(oldIndex);
       dayCourses.insert(newIndex, course);
-      context.read<CourseList>().reorderCourses(dayIndex, oldIndex, newIndex);  // use dayIndex here
+      if (dayIndex == 1) {
+        oldIndex += day1Courses.length;
+        newIndex += day1Courses.length;
+      }
+      else if (dayIndex == 2) {
+        oldIndex = oldIndex + day1Courses.length+ day2Courses.length;
+        newIndex = newIndex + day1Courses.length+ day2Courses.length;
+      }
+      context.read<CourseList>().reorderCourses(widget.dayIndex, oldIndex, newIndex);  // use dayIndex here
     });
   }
 
