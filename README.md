@@ -1,6 +1,4 @@
-# TRIPPY
-
----
+# TRIPPY
 
 MadCamp Week4 4분반 TRIPPY팀
 
@@ -30,7 +28,7 @@ MadCamp Week4 4분반 TRIPPY팀
 
 ### c. 어플리케이션 소개
 
-### 0.Login/SignUp
+### Page 0 - Login/SignUp
 
 ***Major features***
 
