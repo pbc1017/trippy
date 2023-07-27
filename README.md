@@ -6,8 +6,6 @@ MadCamp Week4 4분반 TRIPPY팀
 - 연락처를 받아와서 search,add,delete,상세정보창에서 전화,메세지,이메일보내기가 가능합니다
 - 갤러리에서 local image , 갤러리 image, camera 촬영후 이미지를 추가하고 삭제가 가능합니다
 
----
-
 ### a. 개발 팀원
 
 - 이황근 - 성균관대학교 소프트웨어학과 19학번
