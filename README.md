@@ -37,7 +37,7 @@ MadCamp Week4 4분반 TRIPPY팀
 - splash 구현에서 objectAnimator를 사용하여 두 개의 이미지를 좌우에서 날아오게 애니메이션을 처리하였습니다
 - Handler를 이용해 일정시간 지연 후 작업이 실행되게 하였습니다.
 
-## Page 1 - Home
+## Page 1 - Home
 
 ***Major features***
 
@@ -55,7 +55,7 @@ MadCamp Week4 4분반 TRIPPY팀
 - intent를 이용해 전화, 문자, 이메일 버튼을 눌렀을때 해당 연락처의 정보가 바로 입력될 수 있도록 했습니다.
 - 연락처 삭제를 구현하기 위해 전역변수를 선언하여 삭제된 연락처를 저장했습니다.
 
-## Page 2 - Search
+## Page 2 - Search
 
 ***Major features***
 
@@ -73,7 +73,7 @@ MadCamp Week4 4분반 TRIPPY팀
 - intent를 이용해 전화, 문자, 이메일 버튼을 눌렀을때 해당 연락처의 정보가 바로 입력될 수 있도록 했습니다.
 - 연락처 삭제를 구현하기 위해 전역변수를 선언하여 삭제된 연락처를 저장했습니다.
 
-## Page 3 - Course Detail
+## Page 3 - Course Detail
 
 ***Major features***
 
