@@ -32,7 +32,7 @@ class _CourseWidgetState extends State<CourseWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CourseDetail(course: course, title: widget.title, dayIndex: widget.dayIndex,),
+            builder: (context) => CourseDetail(course: course, title: widget.title, dayIndex: widget.dayIndex,index: widget.index,),
           ),
         );
       },

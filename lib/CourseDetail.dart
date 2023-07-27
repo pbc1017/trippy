@@ -9,10 +9,11 @@ import 'SpotSearch.dart';
 
 class CourseDetail extends StatefulWidget {
   final int dayIndex; 
+  final int index;
   final List<Course> course;
   final String title;
 
-  CourseDetail({Key? key, required this.dayIndex, required this.course, required this.title}) : super(key: key);
+  CourseDetail({Key? key, required this.dayIndex, required this.course, required this.title, required this.index}) : super(key: key);
 
   @override
   _CourseDetailState createState() => _CourseDetailState();

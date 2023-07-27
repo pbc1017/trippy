@@ -4,6 +4,7 @@ import 'package:trippy/models/tripCourse.dart';
 class SpotDetail extends StatelessWidget {
   final Course course;
   final int detailType;
+  
 
   SpotDetail({Key? key, required this.course, required this.detailType}) : super(key: key);
 
